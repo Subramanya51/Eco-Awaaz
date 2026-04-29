@@ -15,10 +15,11 @@ public class HomeService {
 
     public Map<String, Integer> getCountsByResource(String resourceType) {
 
+        // ✅ Fetch only required data from DB
         List<Complaint_DetailsEntity> complaints =
-                repository.findByResourceType(resourceType);
+                repository.findByResourceTypeIgnoreCase(resourceType);
 
-        // 🔹 Predefine categories (so response always has all 4)
+        // ✅ Predefined categories (UI-friendly)
         Map<String, Integer> result = new LinkedHashMap<>();
 
         switch (resourceType.toUpperCase()) {
@@ -48,12 +49,15 @@ public class HomeService {
                 throw new RuntimeException("Invalid resource type");
         }
 
-        // 🔹 Count occurrences
+        // ✅ Count logic (FIXED)
         for (Complaint_DetailsEntity c : complaints) {
-            String type = c.getComplaintType();
 
-            if (result.containsKey(type)) {
-                result.put(type, result.get(type) + 1);
+            String formatted = c.getComplaintType()
+                    .toLowerCase()
+                    .replace("_", " "); // 🔥 KEY FIX
+
+            if (result.containsKey(formatted)) {
+                result.put(formatted, result.get(formatted) + 1);
             }
         }
 

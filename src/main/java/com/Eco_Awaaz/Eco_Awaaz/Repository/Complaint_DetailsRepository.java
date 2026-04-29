@@ -18,4 +18,5 @@ public interface Complaint_DetailsRepository extends JpaRepository<Complaint_Det
     List<Complaint_DetailsEntity> findByPostalCode(String postalCode);
 
     List<Complaint_DetailsEntity> findByResourceTypeAndStatus(String resourceType, String status);
+    List<Complaint_DetailsEntity> findByResourceTypeIgnoreCase(String resourceType);
 }
