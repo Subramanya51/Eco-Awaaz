@@ -11,4 +11,7 @@ public interface ResourceInfoRepository extends JpaRepository<ResourceInfoEntity
 
     Optional<ResourceInfoEntity> findByResourceType(String resourceType);
     Optional<ResourceInfoEntity> findByResourceTypeIgnoreCase(String resourceType);
+
+    Optional<ResourceInfoEntity> findTopByResourceTypeIgnoreCaseOrderByCreatedAtDesc(String resourceType);
+
 }

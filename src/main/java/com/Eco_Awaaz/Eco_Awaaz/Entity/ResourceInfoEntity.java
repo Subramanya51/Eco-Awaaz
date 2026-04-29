@@ -3,6 +3,8 @@ package com.Eco_Awaaz.Eco_Awaaz.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "resource_info")
 
@@ -21,4 +23,6 @@ public class ResourceInfoEntity {
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
 }

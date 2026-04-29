@@ -40,6 +40,8 @@ import com.Eco_Awaaz.Eco_Awaaz.Repository.ResourceInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class ResourceInfoService {
 
@@ -64,6 +66,26 @@ public class ResourceInfoService {
 
         return repository
                 .findByResourceTypeIgnoreCase(type)
+                .orElseThrow(() ->
+                        new RuntimeException("No data found for: " + type));
+    }
+    public ResourceInfoEntity add(String type, String description) {
+
+        ResourceInfoEntity resource = ResourceInfoEntity.builder()
+                .resourceType(type.toLowerCase())
+                .description(description)
+                .createdAt(LocalDateTime.now())   // ✅ set time
+                .build();
+
+        return repository.save(resource);
+    }
+
+
+    // ✅ THIS IS YOUR METHOD (add here)
+    public ResourceInfoEntity getLatest(String type) {
+
+        return repository
+                .findTopByResourceTypeIgnoreCaseOrderByCreatedAtDesc(type)
                 .orElseThrow(() ->
                         new RuntimeException("No data found for: " + type));
     }
