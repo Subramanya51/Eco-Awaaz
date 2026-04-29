@@ -18,7 +18,7 @@ public class ResourceInfoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "resource_type", nullable = false, unique = true)
+    @Column(name = "resource_type", nullable = false)
     private String resourceType;   // WATER / ELECTRICITY / WASTE
 
     @Column(name = "description", columnDefinition = "TEXT")
