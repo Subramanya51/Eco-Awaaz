@@ -49,16 +49,27 @@ public class HomeService {
                 throw new RuntimeException("Invalid resource type");
         }
 
-        // ✅ Count logic (FIXED)
+        Map<String, Integer> normalized = new HashMap<>();
+
+        for (String key : result.keySet()) {
+            normalized.put(key.toLowerCase(), result.get(key));
+        }
+
         for (Complaint_DetailsEntity c : complaints) {
 
             String formatted = c.getComplaintType()
                     .toLowerCase()
-                    .replace("_", " "); // 🔥 KEY FIX
+                    .replace("_", " ");
 
-            if (result.containsKey(formatted)) {
-                result.put(formatted, result.get(formatted) + 1);
+            if (normalized.containsKey(formatted)) {
+                normalized.put(formatted, normalized.get(formatted) + 1);
             }
+        }
+
+// map back to original keys
+        int i = 0;
+        for (String key : result.keySet()) {
+            result.put(key, normalized.get(key.toLowerCase()));
         }
 
         return result;
